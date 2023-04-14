@@ -6,7 +6,7 @@
 /*   By: rbordin <rbordin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 09:45:12 by riccardobor       #+#    #+#             */
-/*   Updated: 2023/04/07 11:55:03 by rbordin          ###   ########.fr       */
+/*   Updated: 2023/04/11 15:52:05 by rbordin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct pipe{
 	char	**argv3;
 	char	*temp2;
 	char	*temp3;
+	char	**tacos;
 	int		count;
 }	t_pipex;
 
@@ -45,6 +46,7 @@ void	checking_argv(t_pipex *pipex, char **argv, char **envp);
 int		sex(t_pipex *pipex);
 void	cancel(t_pipex *pipex);
 void	cleaner2(t_pipex *pipex);
+void	cleaner1_1(char ***matrix);
 void	cleaner1(char **matrix);
 char	*remover(char *temp);
 char	*remover(char *temp);
