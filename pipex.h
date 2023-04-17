@@ -6,7 +6,7 @@
 /*   By: rbordin <rbordin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 09:45:12 by riccardobor       #+#    #+#             */
-/*   Updated: 2023/04/11 15:52:05 by rbordin          ###   ########.fr       */
+/*   Updated: 2023/04/17 10:03:21 by rbordin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 
 typedef struct pipe{
 	int		fd[2];
-	int		infile_fd;
-	int		outfile_fd;
+	int		in_fd;
+	int		out_fd;
 	int		pid1;
 	int		pid2;
 	char	**temp2_matrix;
