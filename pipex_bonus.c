@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: riccardobordin <riccardobordin@student.    +#+  +:+       +#+        */
+/*   By: rbordin <rbordin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 09:43:53 by riccardobor       #+#    #+#             */
-/*   Updated: 2023/03/25 14:29:13 by riccardobor      ###   ########.fr       */
+/*   Updated: 2023/03/27 09:52:34 by rbordin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char **argv)
 
 	j = 0;
 	i = 0;
-	if (argc < 2)
+	if (argc < 5)
 	{
 		perror("not enough arguments");
 	}
@@ -57,10 +57,10 @@ int	main(int argc, char **argv)
 			if (read(pipes[i][0], &x, sizeof(int)) == -1)
 				perror("error reading\n");
 			x++;
-			if (write(pipe[i + 1][1], &x, sizeof(int)) == -1)
+			if (write(pipes[i + 1][1], &x, sizeof(int)) == -1)
 				perror("error writing\n");
-			close(pipe[i][0]);
-			close(pipe[i + 1][1]);
+			close(pipes[i][0]);
+			close(pipes[i + 1][1]);
 			return (0);
 		}
 	}

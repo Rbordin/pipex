@@ -6,13 +6,13 @@
 /*   By: rbordin <rbordin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 15:00:40 by rbordin           #+#    #+#             */
-/*   Updated: 2023/04/17 10:36:15 by rbordin          ###   ########.fr       */
+/*   Updated: 2023/05/04 14:16:17 by rbordin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*ranger(char *temp, char **envp)
+char	*ranger(t_pipex *pipex, char *temp, char **envp)
 {
 	int		i;
 	char	*res;
@@ -20,13 +20,14 @@ char	*ranger(char *temp, char **envp)
 
 	i = 0;
 	res = NULL;
+	pipex->flag = 0;
 	while (envp[i++])
 	{
 		if (ft_strncmp("PATH", envp[i], 4) == 0)
 			break ;
 	}
 	res = ft_pathfinder(res, envp[i]);
-	res = finder(temp, res);
+	res = finder(pipex, temp, res);
 	final = ft_strdup(res);
 	free(res);
 	return (final);
@@ -34,8 +35,8 @@ char	*ranger(char *temp, char **envp)
 
 char	*ft_pathfinder(char *dst, char *src)
 {
-	size_t	i;
 	int		j;
+	size_t	i;
 	size_t	k;
 
 	j = 0;
@@ -83,39 +84,40 @@ int	sex(t_pipex *pipex)
 	return (1);
 }
 
-char	*finder(char *temp, char *path)
+char	*finder(t_pipex *pipex, char *temp, char *path)
 {
-	char	**tacos;
 	int		i;
-	char	*burritos;
-	int		flag;
-	char	*slash;
 
 	i = 0;
-	flag = 0;
-	tacos = ft_split(path, ':');
-	free(path);
-	while (tacos[i++])
+	pipex->tacos = ft_split(path, ':');
+	while (pipex->tacos[i++])
 	{
-		slash = "/";
-		tacos[i] = ft_strjoin(tacos[i], slash, FREE, NO_FREE);
-		burritos = ft_strjoin(tacos[i], temp, NO_FREE, NO_FREE);
-		if (!access(burritos, 0))
+		iteration(pipex, i, temp);
+		if (!access(pipex->burritos, 0))
 		{
-			free(tacos[i]);
-			tacos[i] = ft_strdup(burritos);
-			free(burritos);
-			flag = 1;
+			free(pipex->tacos[i]);
+			pipex->tacos[i] = ft_strdup(pipex->burritos);
+			free(pipex->burritos);
+			pipex->flag = 1;
 			break ;
 		}
-		free(burritos);
+		free(pipex->burritos);
 	}
-	burritos = ft_strdup(tacos[i]);
+	pipex->burritos = ft_strdup(pipex->tacos[i]);
+	cleaner1(pipex->tacos);
 	free(temp);
-	cleaner1(tacos);
-	if (flag)
-		return (burritos);
-	else
-		perror("command not found");
+	free(path);
+	if (pipex->flag)
+		return (pipex->burritos);
+	perror("command not found");
 	return (NULL);
+}
+
+void	iteration(t_pipex *pipex, int i, char *temp)
+{
+	pipex->slash = "/";
+	pipex->tacos[i] = ft_strjoin(pipex->tacos[i],
+			pipex->slash, FREE, NO_FREE);
+	pipex->burritos = ft_strjoin(pipex->tacos[i],
+			temp, NO_FREE, NO_FREE);
 }

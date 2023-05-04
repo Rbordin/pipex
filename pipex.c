@@ -6,7 +6,7 @@
 /*   By: rbordin <rbordin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:11:46 by rbordin           #+#    #+#             */
-/*   Updated: 2023/04/17 10:10:14 by rbordin          ###   ########.fr       */
+/*   Updated: 2023/05/04 14:21:00 by rbordin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,20 @@ void	checking_argv(t_pipex *pipex, char **argv, char **envp)
 
 	pipex->temp2 = remover(argv[2]);
 	pipex->temp2_matrix = ft_split(pipex->temp2, ' ');
-	x = -1;
 	x = checazzoneso(pipex->temp2_matrix);
 	pipex->argv2 = ft_calloc((x + 1), sizeof(char *));
-	pipex->argv2 = moving_matrix(pipex->argv2, pipex->temp2_matrix, envp);
-	y = 0;
+	pipex->argv2 = moving_matrix(pipex, pipex->argv2,
+			pipex->temp2_matrix, envp);
 	pipex->temp3 = remover(argv[3]);
 	pipex->temp3_matrix = ft_split(pipex->temp3, ' ');
 	y = checazzoneso(pipex->temp3_matrix);
 	pipex->argv3 = ft_calloc((y + 1), sizeof(char *));
-	pipex->argv3 = moving_matrix(pipex->argv3, pipex->temp3_matrix, envp);
+	pipex->argv3 = moving_matrix(pipex, pipex->argv3,
+			pipex->temp3_matrix, envp);
 }
 
-char	**moving_matrix(char **final_matrix, char **temp_matrix, char **envp)
+char	**moving_matrix(t_pipex *pipex, char **final_matrix,
+	char **temp_matrix, char **envp)
 {
 	int		x;
 	int		j;
@@ -66,7 +67,7 @@ char	**moving_matrix(char **final_matrix, char **temp_matrix, char **envp)
 
 	x = 1;
 	j = 1;
-	path = ranger(temp_matrix[0], envp);
+	path = ranger(pipex, temp_matrix[0], envp);
 	final_matrix[0] = ft_calloc((ft_strlen(path) + 1), sizeof(char));
 	final_matrix[0] = ft_memmove(final_matrix[0], path, ft_strlen(path));
 	while (temp_matrix[j])
@@ -74,13 +75,11 @@ char	**moving_matrix(char **final_matrix, char **temp_matrix, char **envp)
 		k = ft_strlen(temp_matrix[j]);
 		final_matrix[x] = ft_calloc((ft_strlen(temp_matrix[j])), sizeof(char));
 		final_matrix[x] = ft_memmove(final_matrix[x], temp_matrix[j], k);
-		free(temp_matrix[j]);
 		x++;
 		j++;
 	}
 	final_matrix[j] = NULL;
-	free(temp_matrix[0]);
-	free(temp_matrix);
+	cleaner1(temp_matrix);
 	return (final_matrix);
 }
 
