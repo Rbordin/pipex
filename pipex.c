@@ -6,7 +6,7 @@
 /*   By: rbordin <rbordin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:11:46 by rbordin           #+#    #+#             */
-/*   Updated: 2023/05/04 14:21:00 by rbordin          ###   ########.fr       */
+/*   Updated: 2023/05/17 13:45:11 by rbordin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ int	main(int argc, char **argv, char **envp)
 
 	pipex = malloc(sizeof(t_pipex));
 	if (argc < 5)
-		ft_putstr_fd("not enough arguments\n", 1);
+		error("not enough arguments\n");
 	if (pipe(pipex->fd) == -1)
-		ft_putstr_fd("pipe didn't work properly\n", 1);
+		error("pipe didn't work properly\n");
 	pipex->in_fd = open(argv[1], O_RDONLY);
 	if (pipex->in_fd == -1)
-		ft_putstr_fd("reading error\n", 1);
+		error("reading error\n");
 	pipex->out_fd = open(argv[4], O_TRUNC | O_CREAT | O_RDWR, 0777);
 	if (pipex->out_fd == -1)
-		ft_putstr_fd("reading error\n", 1);
+		error("reading error\n");
 	checking_argv(pipex, argv, envp);
 	if (sex(pipex) < 0)
 		return (1);

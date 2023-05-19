@@ -6,7 +6,7 @@
 /*   By: rbordin <rbordin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 09:45:12 by riccardobor       #+#    #+#             */
-/*   Updated: 2023/04/17 12:05:14 by rbordin          ###   ########.fr       */
+/*   Updated: 2023/05/17 13:44:21 by rbordin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ void	print_matrix(char **matrix);
 char	*command_finder(char **tacos, char *temp);
 void	free_tacos(char **tacos, int i);
 void	iteration(t_pipex *pipex, int i, char *temp);
+void	error(char *str);
 
 #endif
