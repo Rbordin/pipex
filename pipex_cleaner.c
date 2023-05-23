@@ -6,7 +6,7 @@
 /*   By: rbordin <rbordin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 15:00:40 by rbordin           #+#    #+#             */
-/*   Updated: 2023/05/17 13:44:12 by rbordin          ###   ########.fr       */
+/*   Updated: 2023/05/22 11:58:20 by rbordin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,5 @@ void	cleaner1(char **matrix)
 void	error(char *str)
 {
 	ft_putstr_fd(str, 1);
-	exit (1);
+	exit(1);
 }

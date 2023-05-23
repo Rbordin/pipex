@@ -6,7 +6,7 @@
 /*   By: rbordin <rbordin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 15:00:40 by rbordin           #+#    #+#             */
-/*   Updated: 2023/05/04 14:16:17 by rbordin          ###   ########.fr       */
+/*   Updated: 2023/05/22 14:08:14 by rbordin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	sex(t_pipex *pipex)
 {
 	pipex->pid1 = fork();
 	if (pipex->pid1 < 0)
-		perror("error forking\n");
+		error("error forking\n");
 	if (pipex->pid1 == 0)
 	{
 		close(pipex->fd[0]);
@@ -73,7 +73,7 @@ int	sex(t_pipex *pipex)
 	}
 	pipex->pid2 = fork();
 	if (pipex->pid2 < 0)
-		perror("error forking\n");
+		error("error forking\n");
 	if (pipex->pid2 == 0)
 	{
 		dup2(pipex->fd[0], 0);
@@ -86,30 +86,29 @@ int	sex(t_pipex *pipex)
 
 char	*finder(t_pipex *pipex, char *temp, char *path)
 {
-	int		i;
-
-	i = 0;
+	pipex->i = -1;
 	pipex->tacos = ft_split(path, ':');
-	while (pipex->tacos[i++])
+	while (pipex->tacos[++pipex->i])
 	{
-		iteration(pipex, i, temp);
-		if (!access(pipex->burritos, 0))
+		iteration(pipex, pipex->i, temp);
+		if (access(pipex->burritos, F_OK) == 0)
 		{
-			free(pipex->tacos[i]);
-			pipex->tacos[i] = ft_strdup(pipex->burritos);
+			free(pipex->tacos[pipex->i]);
+			pipex->tacos[pipex->i] = ft_strdup(pipex->burritos);
 			free(pipex->burritos);
 			pipex->flag = 1;
 			break ;
 		}
+		else if (pipex->tacos[pipex->i + 1] == NULL)
+			error("command not found\n");
 		free(pipex->burritos);
 	}
-	pipex->burritos = ft_strdup(pipex->tacos[i]);
+	pipex->burritos = ft_strdup(pipex->tacos[pipex->i]);
 	cleaner1(pipex->tacos);
 	free(temp);
 	free(path);
-	if (pipex->flag)
+	if (pipex->flag == 1)
 		return (pipex->burritos);
-	perror("command not found");
 	return (NULL);
 }
 

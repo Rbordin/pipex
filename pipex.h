@@ -6,7 +6,7 @@
 /*   By: rbordin <rbordin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 09:45:12 by riccardobor       #+#    #+#             */
-/*   Updated: 2023/05/17 13:44:21 by rbordin          ###   ########.fr       */
+/*   Updated: 2023/05/22 14:07:34 by rbordin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct pipe{
 	int		flag;
 	char	*burritos;
 	char	*slash;
+	int		i;
 }	t_pipex;
 
 char	**moving_matrix(t_pipex *pipex, char **final_matrix,
